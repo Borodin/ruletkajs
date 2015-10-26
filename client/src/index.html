@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<title>chat</title>
+</head>
+<body>
+	<script src="js/autolink-min.js"></script>
+	<script src="js/twemoji.js"></script>
+	<script src="js/main.js"></script>
+	<table>
+	<tr>
+		<td>	
+			<video id="remoteVideo" autoplay></video><br>
+			<video id="localVideo" class="load" autoplay muted></video><br>
+			<button onclick="WebRTC.getMedia()">camera on</button>
+			<button id="next" onclick="Chat.nextStream()" disabled>next</button><br>
+			<select id="sources"></select>
+		</td>
+		<td>
+			<div id="chat" style="border: 1px solid gray; width:300px; height: 430px; overflow-y: scroll">
+			</div>
+			<textarea id="textarea" cols="40" rows="3" maxlength="1024"></textarea>
+			<!-- <div contentEditable="true" id="textarea" style="border: 1px solid gray; width:300px; height: 100px;"></div> -->
+		</td>
+	</tr>
+	</table>
+</body>
+</html>

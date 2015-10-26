@@ -1,0 +1,8 @@
+{
+  "name": "Start-kit",
+  "dependencies": {
+    "twemoji": "~1.4.1",
+    "social-sharing-buttons": "latest",
+    "autolink": "~1.0.1"
+  }
+}

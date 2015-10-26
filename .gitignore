@@ -1,0 +1,7 @@
+node_modules/
+bower_components/
+client/build/
+client/lib/
+Thumbs.db
+npm-debug.log
+clean.sh

@@ -8,7 +8,7 @@
   "main": "server/",
   "repository": {},
   "scripts": {
-    "postinstall": "bower i && gulp && node server"
+    "postinstall": "bower i && gulp"
   },
   "keywords": [
     "chat",

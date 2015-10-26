@@ -1,8 +1,11 @@
 {
-  "name": "start-kit",
+  "name": "video-chat",
   "version": "0.0.1",
+  "engines": {
+    "node": "4.2.1"
+  },
   "description": "start info",
-  "main": "index.js",
+  "main": "server/",
   "repository": {},
   "scripts": {
     "postinstall": "bower i && gulp && node server"
@@ -33,9 +36,9 @@
     "gulp-uglify": "^1.4.1",
     "main-bower-files": "^2.9.0",
     "paint-console": "0.0.1",
+    "browser-sync": "^2.9.0",
     "ws": "^0.8.0"
   },
   "devDependencies": {
-    "browser-sync": "^2.9.0"
   }
 }

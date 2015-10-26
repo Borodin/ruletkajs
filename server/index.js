@@ -10,8 +10,8 @@ require('paint-console');
 // HTTP
 var server = http.createServer(app);
 app.use(express.static(__dirname + '/../client/build/'));
-server.listen(process.env.PORT || 8080, function() {
-    console.info('HTTP listening on *:' + process.env.PORT || 8080);
+server.listen(config.httpPort, function() {
+    console.info('HTTP listening on *:' + config.httpPort);
 });
 
 // WebSocket

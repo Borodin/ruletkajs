@@ -1,0 +1,41 @@
+.dialog
+    display flex
+    overflow hidden
+    min-width 360px
+    flex 1
+    flex-direction column
+    
+.history
+    flex 1
+    >.scroll-content
+        padding 16px
+
+.message
+    vertical-align top
+    img
+        margin 4px 0
+        display block
+        max-width 100%
+        max-height 400px
+    span
+        white-space pre-wrap
+    &.partner span, &.your span
+        display inline-block
+        background $partner-msg-color
+        padding 6px 16px
+        margin-bottom 10px
+        border-radius 5px
+        max-width 80%
+    &.your
+        text-align right
+    &.your span
+        text-align left
+        border-bottom-right-radius 0
+        background $your-msg-color
+    &.partner span
+        border-top-left-radius 0
+    &.system span
+        display block
+        color $system-msg-color
+        padding 16px
+        padding-left 0

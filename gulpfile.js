@@ -44,9 +44,9 @@ gulp.task('scripts', function() {
 
 // Конкатинирует и минифицирует CSS, STYLUS, создает sourseMap
 gulp.task('styles', function() {
-    return gulp.src(['client/src/css/**/*.styl'])
+    return gulp.src(['client/src/css/main.styl'])
     .pipe(sourcemaps.init())
-    .pipe(concat('main.styl'))
+    //.pipe(concat('main.styl'))
     .pipe(stylus({compress: true}))
     .pipe(autoprefixer({browsers: ['last 2 versions']}))
     .pipe(sourcemaps.write('.'))

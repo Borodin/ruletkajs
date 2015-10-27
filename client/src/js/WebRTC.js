@@ -1,4 +1,4 @@
-/* globals Socket, window*/
+/* globals Socket, window, Chat, Resize*/
 
 var WebRTC = {};
 
@@ -30,6 +30,7 @@ WebRTC.create = function() {
     this.pc.addStream(this.localStream);
     this.pc.onicecandidate = this.getIceCandidate.bind(this);
     this.pc.onaddstream = this.getRemoteStream.bind(this);
+    Chat.remoteStream.classList.add('loading');
 };
 
 WebRTC.getMedia = function() {
@@ -43,14 +44,22 @@ WebRTC.getMedia = function() {
 
 WebRTC.getLocalStream = function(stream) {
     this.localStream = stream;
-    document.getElementById('localVideo').src = URL.createObjectURL(stream);
     Socket.create();
     WebRTC.create();
+    Chat.localVideo.src = URL.createObjectURL(stream);
+    Chat.localStream.classList.remove('camera-off');
+    this.getStream();
 };
 
 WebRTC.getRemoteStream = function(event) {
     this.remoteStream = event.stream;
-    document.getElementById('remoteVideo').src = URL.createObjectURL(event.stream);
+    Chat.remoteVideo.src = URL.createObjectURL(event.stream);
+    Chat.remoteStream.classList.remove('loading');
+    this.getStream();
+};
+
+WebRTC.getStream = function() {
+    setTimeout(Resize.video, 2000);
 };
 
 WebRTC.close = function() {

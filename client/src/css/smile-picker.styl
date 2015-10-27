@@ -1,0 +1,39 @@
+.smile-picker
+    border 1px solid $border-color
+    box-shadow $popup-shadow
+    border-radius 3px
+    width 300px
+    position absolute
+    height 400px
+    background #fff
+    right -9999px
+    padding 10px
+    padding-right 3px
+    opacity 0
+    transition bottom.3s ease, opacity.3s ease
+    bottom -10px
+    &.visible
+        opacity 1
+        right 16px
+        bottom 10px
+    .scroll-content
+        display flex
+        flex-wrap wrap
+        align-content flex-start
+    .title
+        color #888
+        padding 10px 5px 5px 5px
+        font-size 12px
+        width 100%
+    .smile
+        cursor pointer
+        padding 5px
+        transition all.6s ease
+        border-radius 4px
+        img
+            display block
+            width 24px
+        &:hover
+            transition none
+            background $hover-collor
+            

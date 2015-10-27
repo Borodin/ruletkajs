@@ -12,7 +12,8 @@ Socket.create = function() {
 
 Socket.onOpen = function() {
     console.info('WS connected.');
-    document.getElementById('next').disabled = false;
+    Chat.startBtn.innerText = 'Next';
+    Chat.started = true;
     Chat.nextStream();
 };
 
@@ -48,6 +49,7 @@ Socket.onClose = function(event) {
     } else {
         console.warn('Server disconected');
     }
+    Chat.stopStream();
 };
 
 Socket.onError = function(event) {
@@ -55,8 +57,12 @@ Socket.onError = function(event) {
 };
 
 Socket.sendMessage = function(type, content) {
-    this.ws.send(JSON.stringify({
-        type: type,
-        content: content || false
-    }));
+    if (this.ws && this.ws.readyState == 1) {
+        this.ws.send(JSON.stringify({
+            type: type,
+            content: content || false
+        }));
+    } else {
+        console.log('Нет соединения с сервером');
+    }
 };

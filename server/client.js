@@ -24,7 +24,6 @@ var Client = function(socket) {
     });
 
     this.socket.on('close', function() {
-        console.log('clouse conecting ' + _this.id);
         _this.close();
     });
 
@@ -110,10 +109,10 @@ Client.prototype.send = function(type, content) {
 Client.prototype.sendMessage = function(message) {
     if (message) {
         message = message.substr(-1024);
+        this.send('message', {text: message, author: 'your'});
         if (message[0] == '/') {
-            this.send('message', {text: this.console(message), author: 'server'});
+            this.send('message', {text: this.console(message), author: 'system'});
         } else if (this.partner) {
-            this.send('message', {text: message, author: 'your'});
             this.partner.send('message', {text: message, author: 'partner'});
         }
     }
@@ -125,7 +124,7 @@ Client.prototype.console = function(message) {
         case 'id': return 'Your ID: ' + this.id;
         case 'date': return 'Date: ' + (new Date());
         case 'uptime': return 'Uptime: ';
-        case 'help': return '/id\n/date\n/help\n/uptime';
+        case 'help': return '/id — get your ID\n/date\n/help\n/uptime\n/lorem — History demo';
         default: return 'Command "' + message + '" not found, use /help';
     }
 };
@@ -134,6 +133,7 @@ Client.prototype.console = function(message) {
  * Разрывает связь и удаляет клиента
  */
 Client.prototype.close = function() {
+    console.log('clouse conecting ' + this.id);
     if (this.partner) {
         this.partner.send('leave');
     }

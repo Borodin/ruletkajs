@@ -1,30 +1,75 @@
 <!DOCTYPE html>
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="shortcut icon" href="/favicon.ico">
-	<title>chat</title>
+    <meta charset="UTF-8">
+    <title>Ruletka</title>
+    <script src="js/twemoji.js"></script>
+    <script src="js/autolink-min.js"></script>
+    <script src="js/main.js"></script>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="theme-color" content="#00dea6">
 </head>
 <body>
-	<script src="js/autolink-min.js"></script>
-	<script src="js/twemoji.js"></script>
-	<script src="js/main.js"></script>
-	<table>
-	<tr>
-		<td>	
-			<video id="remoteVideo" autoplay></video><br>
-			<video id="localVideo" class="load" autoplay muted></video><br>
-			<button onclick="WebRTC.getMedia()">camera on</button>
-			<button id="next" onclick="Chat.nextStream()" disabled>next</button><br>
-			<select id="sources"></select>
-		</td>
-		<td>
-			<div id="chat" style="border: 1px solid gray; width:300px; height: 430px; overflow-y: scroll">
-			</div>
-			<textarea id="textarea" cols="40" rows="3" maxlength="1024"></textarea>
-			<!-- <div contentEditable="true" id="textarea" style="border: 1px solid gray; width:300px; height: 100px;"></div> -->
-		</td>
-	</tr>
-	</table>
+    <div class="view streams">
+        <div class="header">
+            <h1 class="title">Ruletka</h1>
+            <div class="switch"></div>
+        </div>
+        <div class="content">
+            <div class="stream-bar">
+                <div class="streams">
+                    <div class="stream" id="remoteStream">
+                        <video id="remoteVideo" autoplay></video>
+                        <div class="spin"></div>
+                    </div>
+                    <div class="stream camera-off" id="localStream">
+                        <div class="spin"></div>
+                        <video id="localVideo" autoplay muted></video>
+                        <div class="option-btn"></div>
+                        <div class="option-menu" id="sources"></div>
+                        <div class="camera_info">
+                            <div class="icon"></div>
+                            <div class="info">Включите камеру</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-panel">
+                    <button class="accent" id="start-btn">Start</button>
+                    <button id="stop-btn">Stop</button>
+                    <a href="#" id="report-btn">Report</a>
+                </div>
+                <div class="resize-line vertical"></div>
+            </div>
+            <div class="dialog">
+                <div class="history scroll-box">
+                    <div class="scroll-content" id="history">
+                    </div>
+                    <div class="scroll-bar">
+                        <div class="scroll-btn"></div>
+                    </div>
+                    <div class="smile-picker">
+                        <div class="scroll-box">
+                            <div class="scroll-content">
+                                <div class="title">Частоиспользуемые</div>
+                                <div class="smile"><img src="https://twemoji.maxcdn.com/svg/1f600.svg" alt=""></div>
+                                <div class="smile"><img src="https://twemoji.maxcdn.com/svg/1f601.svg" alt=""></div>
+                                <div class="smile"><img src="https://twemoji.maxcdn.com/svg/1f602.svg" alt=""></div>
+                                <div class="smile"><img src="https://twemoji.maxcdn.com/svg/1f603.svg" alt=""></div>
+                            </div>
+                            <div class="scroll-bar">
+                                <div class="scroll-btn"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="console">
+                    <div class="resize-line"></div>
+                    <div class="smile-btn"></div>
+                    <div class="submit-btn"></div>
+                    <textarea id="textarea"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

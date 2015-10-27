@@ -1,5 +1,178 @@
-@import "variables/color.styl"
+*
+    margin 0
+    padding 0
+    box-sizing border-box
+
+html, body
+    height 100%
+    min-height 100% /*?*/
 
 body
-	background $textarea-bg-color
-	font-family $font-family
+    margin 0
+    color $text-black
+
+body, textarea
+    font 14px/1.4em $font-famyly
+    
+a
+    color $link-color
+
+@keyframes rotate{ from{ transform: rotate(0deg) } to{ transform: rotate(360deg) } }
+
+.view
+    display flex
+    flex-direction column
+    height 100%
+    &.chat .header .switch
+        background-image url(../img/icon_videocam.svg)
+
+.header
+    display flex
+    align-items center
+    padding-left 24px
+    height 48px
+    background $header-bg-color
+    border-bottom 1px solid $border-color
+    .title
+        display block
+        margin 0
+        font-size 18px
+        margin-bottom -3px
+    .switch
+        display none
+        margin-left auto
+        height 48px
+        width 68px
+        background url(../img/icon_chat.svg) no-repeat center;
+        background-size 30%
+        
+.content
+    flex 1
+    display flex
+    flex-direction row
+    
+.stream-bar
+    position relative
+    width 430px
+    min-width 300px
+    padding 10px
+    background $stream-bg-color
+    border-right 1px solid $border-color
+    .streams
+        position relative
+    .resize-line
+        top 0
+        right -3px
+        z-index 1
+    .stream
+        position relative
+        background $video-bg
+        margin-bottom 10px
+        &.camera-off video
+            opacity 0
+        &.camera-off .camera_info
+            display block
+        &.loading video
+            opacity .05
+        &.loading .spin
+            height 16px
+            width 16px
+            opacity 1
+        .spin
+            position absolute
+            top 0
+            right 0
+            bottom 0
+            left 0
+            margin auto
+            height 0
+            width 0
+            border 3px solid #fff
+            border-right-color rgba(0, 0, 0, 0)
+            border-radius 8px
+            animation rotate 1.3s linear infinite
+            transition all.3s ease
+            opacity 0
+    .stream video
+        transition opacity.3s ease
+        display block
+        width 100%
+        height auto
+    .stream:hover .option-btn
+        opacity 1
+    .option-btn
+        position absolute
+        right 0
+        top 0
+        height 36px
+        width 36px
+        cursor pointer
+        background url(../img/icon_settings.svg) no-repeat center
+        filter drop-shadow(0 0 1px rgba(0, 0, 0 , .5))
+        transition opacity.3s ease
+        background-size 50%
+        opacity .6
+    &.big .stream:nth-child(1) video
+        max-height calc(100vh - 162px) /*ID*/
+    &.big .stream:nth-child(2)
+        position absolute
+        margin 0
+        bottom 10px
+        right 10px
+        width 180px
+        box-shadow $popup-shadow
+
+.option-menu
+    display none
+    position absolute
+    padding 10px 0
+    right 30px
+    top 6px
+    background #fff
+    box-shadow $popup-shadow
+    border-radius 3px
+    z-index 1
+    &.visible
+        display block
+    ul
+        list-style none
+    li, .title
+        min-width 160px
+        max-width 250px
+        text-overflow ellipsis
+        overflow hidden
+        white-space nowrap
+        padding 2px 25px 2px 16px
+        display block
+    li
+        cursor pointer
+        padding-left 25px
+        &:hover, &.checked
+            background $hover-collor
+    .title
+        font-weight bold
+
+.camera_info
+    display none
+    position absolute
+    top 0
+    bottom 0
+    margin auto
+    width 100%
+    height 60px
+    text-align center
+    color #fff
+    .icon
+        display inline-block
+        background url(../img/icon_video.svg) no-repeat center;
+        background-size 100%
+        width 40px
+        height 30px
+        
+.control-panel
+    text-align center
+    padding-bottom 10px
+    a
+        display inline-block
+        padding 10px
+        color $text-gray

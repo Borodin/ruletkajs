@@ -6,17 +6,19 @@ var autoprefixer   = require('gulp-autoprefixer');
 var cache          = require('gulp-cache');
 var concat         = require('gulp-concat');
 var imagemin       = require('gulp-imagemin');
-var jscs           = require('gulp-jscs');
-var jshint         = require('gulp-jshint');
 var minifyHTML     = require('gulp-minify-html');
 var size           = require('gulp-size');
 var sourcemaps     = require('gulp-sourcemaps');
-var stylint        = require('gulp-stylint');
 var stylus         = require('gulp-stylus');
 var uglify         = require('gulp-uglify');
 var mainBowerFiles = require('main-bower-files');
 
-var browserSync    = require('browser-sync').create();
+if (process.env.NODE_ENV != 'production') {
+    var browserSync    = require('browser-sync').create();
+    var jscs           = require('gulp-jscs');
+    var jshint         = require('gulp-jshint');
+    var stylint        = require('gulp-stylint');
+}
 
 // Удаляет все содержимое папки build и src/lib
 gulp.task('clean', function() {
@@ -156,9 +158,9 @@ gulp.task('serve', ['build'], function() {
     gulp.watch(['client/src/img/**/*'], ['images', browserSync.reload]);
 });
 
-gulp.task('copy-lib', ['lib-js', 'lib-css']);
+gulp.task('bower', ['mainBowerFiles'], function() {
+    gulp.run(['lib-js', 'lib-css']);
+});
 gulp.task('lint', ['jslint', 'jscs', 'stylint']);
-gulp.task('build',
-    ['clean','clear', 'mainBowerFiles', 'copy', 'copy-lib', 'html', 'images', 'fonts', 'scripts', 'styles']
-);
+gulp.task('build', ['clean', 'clear', 'bower', 'copy', 'html', 'images', 'fonts', 'scripts', 'styles']);
 gulp.task('default', ['build']);

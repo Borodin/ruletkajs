@@ -5,8 +5,6 @@ var WS      = require('ws');
 var config  = require('./config/main');
 var Client  = require('./client');
 
-require('paint-console');
-
 // HTTP
 var server = http.createServer(app);
 app.use(express.static(__dirname + '/../client/build/'));

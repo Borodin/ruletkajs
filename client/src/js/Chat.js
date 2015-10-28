@@ -150,9 +150,12 @@ Chat.getStreamSources = function() {
                 opt.onclick = optOnClick;
             }
 
-            var reflectOption = document.createElement('li');
-            reflectOption.innerText = 'Отразить видео';
-            lists.option.appendChild(reflectOption);
+            var flipBtn = document.createElement('li');
+            flipBtn.innerText = Lang.get('flip_video');
+            flipBtn.onclick = function() {
+                Chat.localVideo.classList.toggle('flip');
+            };
+            lists.option.appendChild(flipBtn);
 
             Chat.sources.innerHTML = '';
             for (var k in lists) {

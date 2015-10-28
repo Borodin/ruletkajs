@@ -90,6 +90,10 @@ Lang.dictionary = {
     'camera-on': {
         'en': 'Turn on the camera',
         'ru': 'Включите камеру'
+    },
+    'flip_video': {
+        'en': 'Flip video',
+        'ru': 'Отразить видео'
     }
 };
 

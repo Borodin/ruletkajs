@@ -36,12 +36,9 @@ Chat.clearHistory = function() {
 };
 
 Chat.fullScreen = function() {
-
-    document.querySelector('.view').classList.toggle('fullscreen');
-    document.querySelector('.stream-bar').classList.remove('big');
-    
     var e;
-
+    var view =  document.querySelector('.view');
+    document.querySelector('.stream-bar').classList.remove('big');
     if (document.fullscreenElement ||
         document.msFullscreenElement ||
         document.webkitCurrentFullScreenElement ||
@@ -57,7 +54,8 @@ Chat.fullScreen = function() {
         } else if (e.mozCancelFullScreen) {
             e.mozCancelFullScreen();
         }
-        //btn.className = 'fullscreen';
+
+        view.classList.remove('fullscreen');
     } else {
         e = document.documentElement;
         if (e.requestFullscreen) {
@@ -69,7 +67,7 @@ Chat.fullScreen = function() {
         } else if (e.mozRequestFullScreen) {
             e.mozRequestFullScreen();
         }
-        //btn.className = 'fullscreen-exit';
+        view.classList.add('fullscreen');
     }
 };
 

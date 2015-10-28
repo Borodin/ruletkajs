@@ -53,7 +53,9 @@ Resize.video = function() {
 
     height += document.querySelector('.control-panel').clientHeight;
 
-    if (height + 40 > window.innerHeight - document.querySelector('.header').clientHeight) {
+    if (height + 40 > window.innerHeight - document.querySelector('.header').clientHeight &&
+     !document.querySelector('.view').classList.contains('fullscreen')
+    ) {
         document.querySelector('.stream-bar').classList.add('big');
     } else {
         document.querySelector('.stream-bar').classList.remove('big');

@@ -187,6 +187,8 @@ Chat.onLoad = function() {
 
     this.startBtn = document.getElementById('start-btn');
     this.stopBtn = document.getElementById('stop-btn');
+    this.reportBtn = document.getElementById('report-btn');
+
     this.cameraInfo = document.getElementById('camera-info');
     this.cameraInfo.innerText = Lang.get('camera-on');
 
@@ -215,6 +217,7 @@ Chat.onLoad = function() {
 
     this.startBtn.innerText = Lang.get('start');
     this.stopBtn.innerText = Lang.get('stop');
+    this.reportBtn.innerText = Lang.get('report');
 
     this.getStreamSources();
 

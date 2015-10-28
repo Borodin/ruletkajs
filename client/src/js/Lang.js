@@ -39,6 +39,10 @@ Lang.dictionary = {
         'en': 'Option',
         'ru': 'Опции'
     },
+    'report': {
+        'en': 'Report abuse',
+        'ru': 'Сообщить о нарушении'
+    },
     'log_start': {
         'en': 'Click "Start" to start a video chat with a random person.',
         'ru': 'Нажмите кнопку «Старт», чтобы начать видеочат с случайным человеком.'

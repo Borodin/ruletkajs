@@ -93,11 +93,14 @@ a
             animation rotate 1.3s linear infinite
             transition all.3s ease
             opacity 0
-    .stream video
-        transition opacity.3s ease
-        display block
-        width 100%
-        height auto
+        video
+            transition opacity.3s ease
+            display block
+            width 100%
+            height auto
+            &.reflect
+                transform scaleX(-1)
+
     .stream:hover .option-btn
         opacity 1
     .option-btn

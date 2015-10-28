@@ -35,6 +35,44 @@ Chat.clearHistory = function() {
     Chat.history.innerHTML = '';
 };
 
+Chat.fullScreen = function() {
+
+    document.querySelector('.view').classList.toggle('fullscreen');
+    document.querySelector('.stream-bar').classList.remove('big');
+    
+    var e;
+
+    if (document.fullscreenElement ||
+        document.msFullscreenElement ||
+        document.webkitCurrentFullScreenElement ||
+        document.mozFullScreenElemenz
+    ) {
+        e = document;
+        if (e.exitFullscreen) {
+            e.exitFullscreen();
+        } else if (e.msExitFullscreen) {
+            e.msExitFullscreen();
+        } else if (e.webkitCancelFullScreen) {
+            e.webkitCancelFullScreen();
+        } else if (e.mozCancelFullScreen) {
+            e.mozCancelFullScreen();
+        }
+        //btn.className = 'fullscreen';
+    } else {
+        e = document.documentElement;
+        if (e.requestFullscreen) {
+            e.requestFullscreen();
+        } else if (e.msRequestFullscreen) {
+            e.msRequestFullscreen();
+        } else if (e.webkitRequestFullScreen) {
+            e.webkitRequestFullScreen();
+        } else if (e.mozRequestFullScreen) {
+            e.mozRequestFullScreen();
+        }
+        //btn.className = 'fullscreen-exit';
+    }
+};
+
 Chat.log = function(text, clear) {
     if (clear) {
         this.clearHistory();
@@ -53,7 +91,7 @@ Chat.pushMesage = function(message) {
     span.innerHTML = twemoji.parse(span.innerText.autoLink({
         callback: function(url) {
             var linkContent = /\.(gif|png|jpe?g)$/i.test(url) ? '<img src="' + url + '">' : url;
-            return '<a target="_blank" href="' + url + '">' + linkContent + '</a>';
+            return '<a target="_blank" class="image" href="' + url + '">' + linkContent + '</a>';
         }
     }), function(icon) {
         return 'https://twemoji.maxcdn.com/svg/' + icon + '.svg';
@@ -187,8 +225,7 @@ Chat.onLoad = function() {
     };
 
     document.querySelector('video').ondblclick = function() {
-        document.querySelector('.view').classList.toggle('fullscreen');
-        document.querySelector('.stream-bar').classList.remove('big');
+        Chat.fullScreen();
     };
 
     document.querySelector('.option-btn').onclick = function() {

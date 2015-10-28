@@ -1,4 +1,4 @@
-/* globals Socket, window, Chat, Resize*/
+/* globals Socket, window, Chat, Resize, Lang*/
 
 var WebRTC = {};
 
@@ -8,7 +8,6 @@ WebRTC.constraints = {
 };
 
 WebRTC.create = function() {
-
     window.PeerConnection =
     window.PeerConnection ||
     window.mozRTCPeerConnection ||
@@ -43,6 +42,7 @@ WebRTC.getMedia = function() {
 };
 
 WebRTC.getLocalStream = function(stream) {
+    Chat.clearHistory();
     this.localStream = stream;
     Socket.create();
     WebRTC.create();
@@ -55,6 +55,8 @@ WebRTC.getRemoteStream = function(event) {
     this.remoteStream = event.stream;
     Chat.remoteVideo.src = URL.createObjectURL(event.stream);
     Chat.remoteStream.classList.remove('loading');
+    Chat.clearHistory();
+    Chat.log(Lang.get('log_partner_conected'), true);
     this.getStream();
 };
 
@@ -62,9 +64,19 @@ WebRTC.getStream = function() {
     setTimeout(Resize.video, 2000);
 };
 
+WebRTC.getError = function() {
+    Chat.log(Lang.get('log_webrtc_error'));
+};
+
 WebRTC.close = function() {
-    WebRTC.pc.close();
-    WebRTC.pc = null;
+    if (WebRTC.pc) {
+        WebRTC.pc.close();
+        WebRTC.pc = null;
+    }
+};
+
+WebRTC.refresh = function() {
+    WebRTC.close();
     WebRTC.create();
 };
 
@@ -74,6 +86,7 @@ WebRTC.gotLocalDescription = function(description) {
 };
 
 WebRTC.streamError = function() {
+    Chat.log(Lang.get('log_stream_error'));
     console.warn('Stream error');
 };
 
@@ -91,7 +104,7 @@ WebRTC.getIceCandidate = function(event) {
 WebRTC.createOffer = function() {
     this.pc.createOffer(
         this.gotLocalDescription.bind(this),
-        console.error,
+        this.getError,
         { 'mandatory': { 'OfferToReceiveAudio': true, 'OfferToReceiveVideo': true } }
     );
 };
@@ -99,7 +112,7 @@ WebRTC.createOffer = function() {
 WebRTC.createAnswer = function() {
     this.pc.createAnswer(
         this.gotLocalDescription.bind(this),
-        console.error,
+        this.getError,
         { 'mandatory': { 'OfferToReceiveAudio': true, 'OfferToReceiveVideo': true } }
     );
 };
@@ -114,22 +127,3 @@ WebRTC.onMessage = function(message) {
         this.pc.addIceCandidate(new window.IceCandidate({sdpMLineIndex: message.label, candidate: message.candidate}));
     }
 };
-
-/*
-MediaStreamTrack.getSources(function(e){
-    console.log(e);
-})
-
-function sourceSelected(audioSource, videoSource) {
-  var constraints = {
-    audio: {
-      optional: [{sourceId: audioSource}]
-    },
-    video: {
-      optional: [{sourceId: videoSource}]
-    }
-  };
-
-  navigator.getUserMedia(constraints, successCallback, errorCallback);
-}
-*/

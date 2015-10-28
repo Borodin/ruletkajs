@@ -8,7 +8,6 @@ ScrollBar.init = function() {
     this.btns = document.querySelectorAll('.scroll-box .scroll-btn');
 
     for (var i = 0; i < this.ctns.length; i++) {
-        console.log(this.boxs[i]);
         this.ctns[i].onscroll = function() {
             ScrollBar.scroll(this);
         }.bind(i);

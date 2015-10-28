@@ -1,18 +1,20 @@
-/* globals WebRTC, Chat */
+/* globals WebRTC, Chat, Lang */
 
 var Socket = {};
 
 Socket.create = function() {
-    this.ws = new WebSocket(location.origin.replace(/^http/, 'ws'));
-    this.ws.addEventListener('open', this.onOpen);
-    this.ws.addEventListener('message', this.onMessage);
-    this.ws.addEventListener('close', this.onClose);
-    this.ws.addEventListener('onerror', this.onError);
+    if (!this.ws || this.ws.readyState != 1) {
+        this.ws = new WebSocket(location.origin.replace(/^http/, 'ws'));
+        this.ws.addEventListener('open', this.onOpen);
+        this.ws.addEventListener('message', this.onMessage);
+        this.ws.addEventListener('close', this.onClose);
+        this.ws.addEventListener('onerror', this.onError);
+    }
 };
 
 Socket.onOpen = function() {
     console.info('WS connected.');
-    Chat.startBtn.innerText = 'Next';
+    Chat.startBtn.innerText = Lang.get('next');
     Chat.started = true;
     Chat.nextStream();
 };
@@ -32,10 +34,13 @@ Socket.onMessage = function(event) {
         WebRTC.onMessage(content);
     } else if (type == 'leave') {
         console.info(type);
-        WebRTC.close();
+        WebRTC.refresh();
+        Chat.log(Lang.get('log_leave'), true);
     } else if (type == 'next') {
         console.info(type);
-        WebRTC.close();
+        Chat.log(Lang.get('log_next'), true);
+        Chat.log(Lang.get('log_search'));
+        WebRTC.refresh();
     } else if (type == 'message') {
         Chat.pushMesage(content);
     } else {
@@ -45,14 +50,15 @@ Socket.onMessage = function(event) {
 
 Socket.onClose = function(event) {
     if (event.wasClean) {
-        console.info('Clouse conecting');
+        Chat.log(Lang.get('log_clouse_conecting'), true);
     } else {
-        console.warn('Server disconected');
+        Chat.log(Lang.get('log_clouse_disconected'), true);
     }
     Chat.stopStream();
 };
 
 Socket.onError = function(event) {
+    Chat.log(Lang.get('log_socket_error'), true);
     console.warn('Socket ERROR:', event.data);
 };
 
@@ -63,6 +69,6 @@ Socket.sendMessage = function(type, content) {
             content: content || false
         }));
     } else {
-        console.log('Нет соединения с сервером');
+        Chat.log(Lang.get('log_no_conection'));
     }
 };

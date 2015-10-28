@@ -1,28 +1,48 @@
-/* globals WebRTC, Socket, twemoji, ScrollBar, Resize */
+/* globals WebRTC, Socket, twemoji, ScrollBar, Resize, Lang */
 
 var Chat = {};
 
 Chat.startStream = function() {
     WebRTC.getMedia();
+    Chat.log(Lang.get('log_get_stream'));
 };
 
 Chat.stopStream = function() {
-    WebRTC.close();
     Socket.sendMessage('stop');
+    WebRTC.close();
     Socket.ws.close();
     this.localStream.classList.add('camera-off');
-    this.startBtn.innerText = 'Start';
+    this.startBtn.innerText = Lang.get('start');
     this.started = false;
+
+    this.localVideo.pause();
+    this.localVideo.src = '';
+    WebRTC.localStream.stop();
 };
 
 Chat.nextStream = function() {
-    WebRTC.close();
+    Chat.log(Lang.get('log_search'));
+    WebRTC.refresh();
     Socket.sendMessage('next');
 };
 
 Chat.sendMessage = function() {
     Socket.sendMessage('message', Chat.textarea.value);
     Chat.textarea.value = '';
+};
+
+Chat.clearHistory = function() {
+    Chat.history.innerHTML = '';
+};
+
+Chat.log = function(text, clear) {
+    if (clear) {
+        this.clearHistory();
+    }
+    this.pushMesage({
+        text: text,
+        author: 'system'
+    });
 };
 
 Chat.pushMesage = function(message) {
@@ -44,7 +64,7 @@ Chat.pushMesage = function(message) {
     div.appendChild(span);
     Chat.history.appendChild(div);
 
-    if (message.author != 'your') {
+    if (message.author == 'partner') {
         Chat.showNotification(message.text);
     }
     Chat.history.scrollTop = Chat.history.scrollHeight;
@@ -78,11 +98,20 @@ Chat.getStreamSources = function() {
                 'option': document.createElement('ul')
             };
 
+            var optOnClick = function() {
+                WebRTC.constraints[this.dataset.kind] = {
+                    optional: [{sourceId: this.dataset.id}]
+                };
+                console.log(this.value, WebRTC.constraints);
+            };
+
             for (var i = 0; i < list.length; i++) {
                 var opt = document.createElement('li');
                 opt.innerText = list[i].label || list[i].kind + ' ' + (lists[list[i].kind].childElementCount + 1);
-                opt.setAttribute('data-id', list[i].id);
+                opt.dataset.id = list[i].id;
+                opt.dataset.kind = list[i].kind;
                 lists[list[i].kind].appendChild(opt);
+                opt.onclick = optOnClick;
             }
 
             var reflectOption = document.createElement('li');
@@ -93,22 +122,16 @@ Chat.getStreamSources = function() {
             for (var k in lists) {
                 var title = document.createElement('div');
                 title.className = 'title';
-                title.innerText = k;
+                title.innerText = Lang.get(k);
                 Chat.sources.appendChild(title);
                 Chat.sources.appendChild(lists[k]);
             }
-            /**
-                Chat.sources.onchange = function() {
-                    WebRTC.constraints.video = {};
-                    WebRTC.constraints.video.optional = [{sourceId: this.value}];
-                    console.log(this.value, WebRTC.constraints.video.optional);
-                };
-            */
         });
     }
 };
 
 Chat.onLoad = function() {
+    Lang.setLanguage();
     this.started = false;
 
     this.audio = new Audio('notification.mp3');
@@ -125,6 +148,8 @@ Chat.onLoad = function() {
 
     this.startBtn = document.getElementById('start-btn');
     this.stopBtn = document.getElementById('stop-btn');
+    this.cameraInfo = document.getElementById('camera-info');
+    this.cameraInfo.innerText = Lang.get('camera-on');
 
     this.sendBtn.addEventListener('click', Chat.sendMessage);
 
@@ -149,8 +174,8 @@ Chat.onLoad = function() {
         }
     });
 
-    this.startBtn.innerText = 'Start';
-    this.stopBtn.innerText = 'Stop';
+    this.startBtn.innerText = Lang.get('start');
+    this.stopBtn.innerText = Lang.get('stop');
 
     this.getStreamSources();
 
@@ -176,6 +201,7 @@ Chat.onLoad = function() {
 
     ScrollBar.init();
     Resize.init();
+    Chat.log(Lang.get('log_start'));
     /**
         this.textarea.addEventListener('input', function() {
             twemoji.parse(this);

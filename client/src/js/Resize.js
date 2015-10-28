@@ -16,7 +16,6 @@ Resize.init = function() {
                 document.body.style.cursor = 'row-resize';
                 Resize.start = this.parentElement.clientHeight;
             }
-            console.log(Resize.start);
             Resize.xMouse  = event.clientX;
             Resize.yMouse  = event.clientY;
             document.ondragstart = function() { return false };

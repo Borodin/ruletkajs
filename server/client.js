@@ -129,8 +129,9 @@ Client.prototype.console = function(message) {
         case 'id': return 'Your ID: ' + this.id;
         case 'date': return 'Date: ' + (new Date());
         case 'uptime': return 'Uptime: ';
-        case 'help': return '/id — get your ID\n/date\n/help\n/uptime\n/lorem — History demo';
+        case 'help': return '/id — get your ID\n/date\n/help\n/uptime\n/lorem — History demo\n/github';
         case 'lorem': return this.lorem();
+        case 'github': return 'GitHub - https://github.com/Borodin/ruletkajs';
         default: return 'Command "' + message + '" not found, use /help';
     }
 };

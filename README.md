@@ -1,5 +1,6 @@
-video-chat
-==========
+RuletkaJS
+=========
+[DEMO](http://www.ruletkajs.com/)
 
 #### Getting started
 ```npm install -g gulp bower```

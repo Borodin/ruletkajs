@@ -4,6 +4,10 @@
     min-width 360px
     flex 1
     flex-direction column
+    user-select text
+    & *::selection
+        color black
+        background alpha($accent-color, 0.3)
     
 .history
     flex 1

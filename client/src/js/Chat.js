@@ -121,7 +121,13 @@ Chat.showNotification = function(text) {
     } else if (Notification.permission != 'granted') {
         Notification.requestPermission();
     }else if (Notification.permission == 'granted' && document.hidden) {
-        new Notification(text);
+        var notification = new Notification('RuletkaJS', {
+            body: text,
+            icon: '/img/icon_192.png'
+        });
+        notification.onclick = function() {
+            window.focus();
+        };
     }
 };
 

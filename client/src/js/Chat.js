@@ -277,18 +277,24 @@ Chat.onLoad = function() {
         document.querySelector('.smile-picker').classList.toggle('visible');
     };
 
-    Chat.setSmiles()
+    document.querySelector('.smile-picker').addEventListener('click', function() {
+        this.classList.add('visible');
+    });
+
+    document.body.addEventListener('click', function(e) {
+        if (
+            e.target != document.querySelector('.option-btn') &&
+            e.target != document.querySelector('.smile-btn')
+        ) {
+            document.querySelector('.smile-picker').classList.remove('visible');
+            document.querySelector('.option-menu').classList.remove('visible');
+        }
+    }, true);
+
+    Chat.setSmiles();
     ScrollBar.init();
     Resize.init();
     Chat.log(Lang.get('log_start'));
-    /**
-        this.textarea.addEventListener('input', function() {
-            twemoji.parse(this);
-                this.innerHTML = twemoji.parse(this.innerText, function(icon) {
-                    return 'https://twemoji.maxcdn.com/svg/' + icon + '.svg';
-                });
-        });
-    */
 };
 
 window.addEventListener('load', Chat.onLoad.bind(Chat));

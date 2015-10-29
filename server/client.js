@@ -1,4 +1,6 @@
 
+var lorem = require('./config/lorem');
+
 var clients = {};
 
 var Client = function(socket) {
@@ -118,6 +120,9 @@ Client.prototype.sendMessage = function(message) {
     }
 };
 
+/**
+ *
+ */
 Client.prototype.console = function(message) {
     var command = message.substr(1).split(' ');
     switch (command[0]) {
@@ -125,8 +130,19 @@ Client.prototype.console = function(message) {
         case 'date': return 'Date: ' + (new Date());
         case 'uptime': return 'Uptime: ';
         case 'help': return '/id — get your ID\n/date\n/help\n/uptime\n/lorem — History demo';
+        case 'lorem': return this.lorem();
         default: return 'Command "' + message + '" not found, use /help';
     }
+};
+
+/**
+ *
+ */
+Client.prototype.lorem = function() {
+    for (var i = 0; i < lorem.length; i++) {
+        this.send('message', lorem[i]);
+    }
+    return 'Lorem end.';
 };
 
 /**

@@ -143,7 +143,7 @@ gulp.task('stylint', function() {
 });
 
 // Запускает локальный http сервер, следит за изменениями
-gulp.task('serve', ['build'], function() {
+gulp.task('serve', function() {
     browserSync.init({
         notify: false,
         server: 'client/build',

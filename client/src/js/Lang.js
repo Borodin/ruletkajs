@@ -98,6 +98,34 @@ Lang.dictionary = {
     'flip_video': {
         'en': 'Flip video',
         'ru': 'Отразить видео'
+    },
+    'smile_people': {
+        'en': 'People',
+        'ru': 'Люди'
+    },
+    'smile_nature': {
+        'en': 'Nature',
+        'ru': 'Природа'
+    },
+    'smile_food': {
+        'en': 'Food & Drink',
+        'ru': 'Еда и Напитки'
+    },
+    'smile_celebration': {
+        'en': 'Celebration',
+        'ru': 'Праздник'
+    },
+    'smile_activity': {
+        'en': 'Activity',
+        'ru': 'Мероприятия'
+    },
+    'smile_travel': {
+        'en': 'Travel & Places',
+        'ru': 'Путешествия и Места'
+    },
+    'smile_objects': {
+        'en': 'Objects & Symbols',
+        'ru': 'Объекты и Символы'
     }
 };
 

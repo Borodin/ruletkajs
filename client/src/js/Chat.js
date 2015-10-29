@@ -1,4 +1,4 @@
-/* globals WebRTC, Socket, twemoji, ScrollBar, Resize, Lang */
+/* globals WebRTC, Socket, twemoji, ScrollBar, Resize, Lang, EmojiGroup */
 
 var Chat = {};
 
@@ -169,6 +169,35 @@ Chat.getStreamSources = function() {
     }
 };
 
+Chat.setSmiles = function() {
+    console.time('smile');
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < EmojiGroup.length; i++) {
+        var title = document.createElement('div');
+        title.className = 'title';
+        title.innerText = Lang.get('smile_' + EmojiGroup[i].key);
+        frag.appendChild(title);
+
+        for (var j = 0; j < EmojiGroup[i].emoji.length; j++) {
+            var smile = document.createElement('div');
+            smile.className = 'smile';
+            smile.innerHTML = '&#x' + EmojiGroup[i].emoji[j].split('-').join(';&#x') + ';';
+            smile.onclick = function() {
+                Chat.textarea.focus();
+                var strPos = Chat.textarea.selectionStart;
+                Chat.textarea.value = (Chat.textarea.value).substring(0,strPos) + this +
+                (Chat.textarea.value).substring(strPos,Chat.textarea.value.length);
+            }.bind(smile.innerHTML);
+            frag.appendChild(smile);
+        }
+    }
+    twemoji.parse(frag, {callback: function(icon) {
+        return 'https://twemoji.maxcdn.com/svg/' + icon + '.svg';
+    }});
+    Chat.smiles.appendChild(frag);
+    console.timeEnd('smile');
+};
+
 Chat.onLoad = function() {
     Lang.setLanguage();
     this.started = false;
@@ -191,6 +220,8 @@ Chat.onLoad = function() {
 
     this.cameraInfo = document.getElementById('camera-info');
     this.cameraInfo.innerText = Lang.get('camera-on');
+
+    this.smiles = document.querySelector('.smile-picker .scroll-content');
 
     this.sendBtn.addEventListener('click', Chat.sendMessage);
 
@@ -240,6 +271,7 @@ Chat.onLoad = function() {
         document.querySelector('.smile-picker').classList.toggle('visible');
     };
 
+    Chat.setSmiles()
     ScrollBar.init();
     Resize.init();
     Chat.log(Lang.get('log_start'));

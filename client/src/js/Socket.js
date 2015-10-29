@@ -16,6 +16,9 @@ Socket.onOpen = function() {
     console.info('WS connected.');
     Chat.startBtn.innerText = Lang.get('next');
     Chat.started = true;
+    Chat.interval = setInterval(function() {
+        Socket.sendMessage('ping', {}, true);
+    }, 5000);
     Chat.nextStream();
 };
 
@@ -49,6 +52,7 @@ Socket.onMessage = function(event) {
 };
 
 Socket.onClose = function(event) {
+    clearInterval(Chat.interval);
     if (event.wasClean) {
         Chat.log(Lang.get('log_clouse_conecting'), true);
     } else {
@@ -58,17 +62,18 @@ Socket.onClose = function(event) {
 };
 
 Socket.onError = function(event) {
+    clearInterval(Chat.interval);
     Chat.log(Lang.get('log_socket_error'), true);
     console.warn('Socket ERROR:', event.data);
 };
 
-Socket.sendMessage = function(type, content) {
+Socket.sendMessage = function(type, content, mute) {
     if (this.ws && this.ws.readyState == 1) {
         this.ws.send(JSON.stringify({
             type: type,
             content: content || false
         }));
-    } else {
+    } else if (!mute) {
         Chat.log(Lang.get('log_no_conection'));
     }
 };

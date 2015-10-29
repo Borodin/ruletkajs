@@ -9,7 +9,8 @@
   "repository": {},
   "scripts": {
     "postinstall": "bower i && gulp",
-    "start": "node server/"
+    "start": "node server/",
+    "test": "npm i"
   },
   "keywords": [
     "chat",

@@ -128,13 +128,28 @@ Client.prototype.console = function(message) {
     switch (command[0]) {
         case 'id': return 'Your ID: ' + this.id;
         case 'date': return 'Date: ' + (new Date());
-        case 'uptime': return 'Uptime: ';
-        case 'help': return '/id — get your ID\n/date\n/help\n/uptime\n/lorem — History demo\n/github';
+        case 'uptime': return 'Uptime: ' + this.getUpTime();
+        case 'help': return '/id — get your ID\n/date\n/help\n/uptime\n/status\n/lorem — History demo\n/github';
         case 'lorem': return this.lorem();
         case 'github': return 'GitHub - https://github.com/Borodin/ruletkajs';
+        case 'status': return Object.keys(clients).length + ' Users online';
         default: return 'Command "' + message + '" not found, use /help';
     }
 };
+
+/**
+ *
+ */
+Client.prototype.getUpTime = function() {
+    var uptime = process.uptime();
+
+    var hours = Math.floor(uptime / (60 * 60));
+    var minutes = Math.floor(uptime % (60 * 60) / 60);
+    var seconds = Math.floor(uptime % 60);
+
+    return ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+};
+
 
 /**
  *

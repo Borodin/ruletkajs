@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- '4.2.1'
+branches:
+  only:
+  - master
+deploy:
+  provider: heroku
+  app: ruletkajs
+  on:
+    repo: borodin/ruletkajs

@@ -1,6 +1,7 @@
 RuletkaJS
 =========
-[DEMO](http://www.ruletkajs.com/)
+[![Build Status](https://travis-ci.org/Borodin/ruletkajs.svg?branch=master)](https://travis-ci.org/Borodin/ruletkajs)
+#### [ruletkajs.com](http://www.ruletkajs.com/)
 
 #### Getting started
 ```npm install -g gulp bower```

@@ -8,7 +8,7 @@ Socket.create = function() {
         this.ws.addEventListener('open', this.onOpen);
         this.ws.addEventListener('message', this.onMessage);
         this.ws.addEventListener('close', this.onClose);
-        this.ws.addEventListener('onerror', this.onError);
+        this.ws.addEventListener('error', this.onError);
     }
 };
 
